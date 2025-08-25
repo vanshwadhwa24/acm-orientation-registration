@@ -62,8 +62,9 @@ const HomePage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-   
-      const API_URL = process.env.REACT_APP_API_URL || "https://acm-orientation-registration.onrender.com";
+      const API_URL =
+        process.env.REACT_APP_API_URL ||
+        "https://acm-orientation-registration.onrender.com";
       const response = await fetch(`${API_URL}/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -95,7 +96,6 @@ const HomePage = () => {
   return (
     <div className="bg-cover bg-no-repeat m-0 bg-white text-gray-900 transition-colors duration-300">
       <div className="flex flex-col md:flex-row justify-center items-start py-10 gap-8 px-4">
-       
         <div className="bg-gradient-to-br from-[#e6f7ff] to-[#d3f3ff] w-full md:w-1/3 p-8 rounded-3xl shadow-2xl border border-gray-200 transition-all duration-300 order-1 md:order-2">
           <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center md:text-left">
             Orientation Details
@@ -107,11 +107,14 @@ const HomePage = () => {
             <span className="font-semibold">Time:</span> 5:30 PM IST
           </p>
           <p className="text-gray-600 mb-2">
-            <span className="font-semibold">Venue:</span> LT101, Thapar University
+            <span className="font-semibold">Venue:</span> LT101, Thapar
+            University
           </p>
           <p className="text-gray-600 mt-4 text-center md:text-left font-medium">
             Registrations will close in:{" "}
-            <span className="text-[#15a6dd] font-bold">{formatTime(timeLeft)}</span>
+            <span className="text-[#15a6dd] font-bold">
+              {formatTime(timeLeft)}
+            </span>
           </p>
           {deadlinePassed && (
             <p className="text-orange-500 font-medium mt-2 text-center md:text-left">
@@ -121,39 +124,63 @@ const HomePage = () => {
 
           {qrCode && (
             <div className="flex flex-col items-center mt-6">
-              <h3 className="text-lg font-semibold">Your Registration QR Code</h3>
-              <img src={qrCode} alt="Registration QR" className="mt-4 w-48 h-48" />
+              <h3 className="text-lg font-semibold">
+                Your Registration QR Code
+              </h3>
+              <img
+                src={qrCode}
+                alt="Registration QR"
+                className="mt-4 w-48 h-48"
+              />
               <p className="text-gray-600 mt-2 text-sm">
                 Scan this QR at the event to confirm your registration.
               </p>
+              <button
+                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                onClick={() => {
+                  const link = document.createElement("a");
+                  link.href = qrCode;
+                  link.download = "registration-qr.png";
+                  link.click();
+                }}
+              >
+                Download QR
+              </button>
             </div>
           )}
         </div>
 
         {notification && (
           <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div
-            className="absolute inset-0 bg-black/30"
-            onClick={() => setNotification(null)}
-          ></div>
-          <div
-            className={`relative z-10 flex flex-col items-center p-6 rounded-3xl border shadow-2xl transition-all duration-300 max-w-md w-full
-            ${notification.type === "success" ? "bg-green-100 border-green-400 text-green-800" : ""}
-            ${notification.type === "error" ? "bg-red-100 border-red-400 text-red-800" : ""}`}
-          >
-            <span className="text-center">{notification.message}</span>
-            <button
-              className="mt-4 text-gray-700 font-bold hover:text-gray-900"
+            <div
+              className="absolute inset-0 bg-black/30"
               onClick={() => setNotification(null)}
-              type="button"
+            ></div>
+            <div
+              className={`relative z-10 flex flex-col items-center p-6 rounded-3xl border shadow-2xl transition-all duration-300 max-w-md w-full
+            ${
+              notification.type === "success"
+                ? "bg-green-100 border-green-400 text-green-800"
+                : ""
+            }
+            ${
+              notification.type === "error"
+                ? "bg-red-100 border-red-400 text-red-800"
+                : ""
+            }`}
             >
-              × Close
-            </button>
+              <span className="text-center">{notification.message}</span>
+              <button
+                className="mt-4 text-gray-700 font-bold hover:text-gray-900"
+                onClick={() => setNotification(null)}
+                type="button"
+              >
+                × Close
+              </button>
+            </div>
           </div>
-        </div>
         )}
 
-    
         <form
           onSubmit={handleSubmit}
           className="bg-gradient-to-br from-[#e6f7ff] to-[#d3f3ff] space-y-6 w-full md:w-1/3 p-10 rounded-3xl shadow-2xl border border-gray-200 transition-all duration-300 order-2 md:order-1"
@@ -217,26 +244,49 @@ const HomePage = () => {
       <div className="bg-[#D3f3ff] mt-10 p-6 text-center md:shadow-none md:w-full md:ml-0 md:mb-0 sm:text-left transition-colors duration-300">
         <div className="flex flex-col md:flex-row justify-between w-full gap-6">
           <div className="flex flex-col max-w-[32rem]">
-            <div className="text-3xl font-extrabold text-gray-900">ACM Thapar Student Chapter</div>
+            <div className="text-3xl font-extrabold text-gray-900">
+              ACM Thapar Student Chapter
+            </div>
             <div className="text-lg text-gray-400 mt-2">
-              A vibrant community of tech enthusiasts, dedicated to exploring, tackling and connecting with all things tech.
+              A vibrant community of tech enthusiasts, dedicated to exploring,
+              tackling and connecting with all things tech.
             </div>
             <div className="flex flex-row gap-4 mt-4 justify-center sm:justify-start">
-              <a href="https://www.instagram.com/acmthapar/">
+              <a
+                href="https://www.instagram.com/acmthapar/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <img src={instagram} alt="instagram" className="w-6 h-6" />
               </a>
-              <a href="https://www.linkedin.com/company/thapar-acm-student-chapter/">
+              <a
+                href="https://www.linkedin.com/company/thapar-acm-student-chapter/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <img src={linkedinUrl} alt="linkedin" className="w-6 h-6" />
               </a>
-              <a href="https://github.com/ACM-Thapar">
+              <a
+                href="https://github.com/ACM-Thapar"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <img src={github} alt="github" className="w-6 h-6" />
               </a>
             </div>
           </div>
 
           <div className="md:mt-5 flex justify-center md:justify-end">
-            <a href="https://acmwebsite.vercel.app/">
-              <img src={logo} alt="ACM Thapar" className="w-[150px] md:w-[350px] h-auto" />
+            <a
+              href="https://acmwebsite.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src={logo}
+                alt="ACM Thapar"
+                className="w-[150px] md:w-[350px] h-auto"
+              />
             </a>
           </div>
         </div>
