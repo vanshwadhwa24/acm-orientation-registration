@@ -20,10 +20,24 @@ const HomePage = () => {
       [name]: value,
     }));
   };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    try {
+      const response = await fetch("http://localhost:5000/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+  
+      const data = await response.json();
+      if (response.ok) {
+        alert("Registration successful!");
+      } else {
+        alert("Error: " + data.error);
+      }
+    } catch (error) {
+      alert("Something went wrong!");
+    }
   };
 
   return (
